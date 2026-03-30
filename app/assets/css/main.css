@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+  }
+
+  body {
+    @apply bg-slate-950 text-slate-100;
+  }
+}
+
+/* Markdown from ContentRenderer — avoids @tailwindcss/typography version coupling */
+@layer components {
+  .content-prose {
+    @apply mt-10 space-y-4 text-slate-300 leading-relaxed;
+  }
+
+  .content-prose :where(h1, h2, h3) {
+    @apply font-semibold text-white scroll-mt-24;
+  }
+
+  .content-prose :where(h1) {
+    @apply text-2xl mt-2;
+  }
+
+  .content-prose :where(h2) {
+    @apply text-xl mt-10;
+  }
+
+  .content-prose :where(h3) {
+    @apply text-lg mt-8;
+  }
+
+  .content-prose :where(p) {
+    @apply text-slate-300;
+  }
+
+  .content-prose :where(a) {
+    @apply text-indigo-300 underline decoration-indigo-500/40 underline-offset-2 hover:text-indigo-200;
+  }
+
+  .content-prose :where(ul, ol) {
+    @apply my-4 pl-6;
+  }
+
+  .content-prose :where(li) {
+    @apply my-1;
+  }
+
+  .content-prose :where(code) {
+    @apply rounded bg-white/10 px-1.5 py-0.5 text-sm text-slate-100;
+  }
+
+  .content-prose :where(pre) {
+    @apply my-4 overflow-x-auto rounded-lg border border-white/10 bg-slate-900/80 p-4 text-sm text-slate-200;
+  }
+
+  .content-prose :where(blockquote) {
+    @apply border-l-2 border-indigo-500/50 pl-4 italic text-slate-400;
+  }
+}

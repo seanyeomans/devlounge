@@ -1,0 +1,26 @@
+services:
+  nuxt:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "3000:3000"
+    volumes:
+      # Source from host
+      - .:/app
+      # Keep deps and Nuxt build cache inside Docker (faster + avoids Windows bind-mount issues)
+      - nuxt_node_modules:/app/node_modules
+      - nuxt_dot_nuxt:/app/.nuxt
+    environment:
+      CI: "true"
+      HOST: "0.0.0.0"
+      # File watching when the project is bind-mounted (especially on Windows)
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    stdin_open: true
+    tty: true
+
+volumes:
+  nuxt_node_modules:
+  nuxt_dot_nuxt:
