@@ -29,6 +29,37 @@
         >
           {{ item.label }}
         </NuxtLink>
+        <span class="mx-1 h-6 w-px bg-white/10" aria-hidden="true" />
+        <template v-if="user">
+          <NuxtLink
+            to="/account"
+            class="rounded-md px-3 py-2 transition hover:bg-white/5 hover:text-white"
+            active-class="bg-white/10 text-white"
+          >
+            Account
+          </NuxtLink>
+          <button
+            type="button"
+            class="rounded-md px-3 py-2 text-slate-300 transition hover:bg-white/5 hover:text-white"
+            @click="signOut"
+          >
+            Sign out
+          </button>
+        </template>
+        <template v-else>
+          <NuxtLink
+            to="/login"
+            class="rounded-md px-3 py-2 transition hover:bg-white/5 hover:text-white"
+          >
+            Sign in
+          </NuxtLink>
+          <NuxtLink
+            to="/register"
+            class="rounded-md bg-indigo-500/20 px-3 py-2 text-indigo-200 transition hover:bg-indigo-500/30"
+          >
+            Join
+          </NuxtLink>
+        </template>
       </nav>
 
       <div class="flex items-center gap-2 md:hidden">
@@ -58,6 +89,38 @@
         >
           {{ item.label }}
         </NuxtLink>
+        <template v-if="user">
+          <NuxtLink
+            to="/account"
+            class="rounded-md px-2 py-2 text-slate-200 hover:bg-white/5"
+            @click="open = false"
+          >
+            Account
+          </NuxtLink>
+          <button
+            type="button"
+            class="w-full rounded-md px-2 py-2 text-left text-slate-200 hover:bg-white/5"
+            @click="onSignOutMobile"
+          >
+            Sign out
+          </button>
+        </template>
+        <template v-else>
+          <NuxtLink
+            to="/login"
+            class="rounded-md px-2 py-2 text-slate-200 hover:bg-white/5"
+            @click="open = false"
+          >
+            Sign in
+          </NuxtLink>
+          <NuxtLink
+            to="/register"
+            class="rounded-md px-2 py-2 text-indigo-200 hover:bg-white/5"
+            @click="open = false"
+          >
+            Join
+          </NuxtLink>
+        </template>
       </nav>
     </div>
   </header>
@@ -65,6 +128,8 @@
 
 <script setup lang="ts">
 const open = ref(false)
+const user = useSupabaseUser()
+const client = useSupabaseClient()
 
 const links = [
   { label: 'Podcast', to: '/podcast' },
@@ -72,4 +137,14 @@ const links = [
   { label: 'News', to: '/news' },
   { label: 'Partners', to: '/partners' },
 ] as const
+
+async function signOut() {
+  await client.auth.signOut()
+  await navigateTo('/')
+}
+
+async function onSignOutMobile() {
+  open.value = false
+  await signOut()
+}
 </script>

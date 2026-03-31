@@ -15,7 +15,7 @@
       </NuxtLink>
     </div>
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <NewsNewsCard v-for="n in items" :key="n.path" :item="n" />
+      <NewsCard v-for="n in items" :key="n.path" :item="n" />
     </div>
   </section>
 </template>
