@@ -9,13 +9,4 @@ export default defineNuxtRouteMiddleware((to) => {
       query: { redirect: to.fullPath },
     })
   }
-
-  // Signed-in members should not stay on the gate page.
-  if (user.value && to.path === '/coming-soon') {
-    const redirect = to.query.redirect
-    if (typeof redirect === 'string' && redirect.startsWith('/')) {
-      return navigateTo(redirect)
-    }
-    return navigateTo('/')
-  }
 })
